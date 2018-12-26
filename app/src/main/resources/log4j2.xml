@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="warn" strict="true" monitorInterval="30">
+    <properties>
+        <Property name="LogPath">${log.path}</Property>
+        <Property name="AppRollingFile">${LogPath}/app.log</Property>
+    </properties>
+    <Appenders>
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+        </Console>
+
+        <RollingFile name="AppRollingFile" fileName="${AppRollingFile}"
+                     filePattern="${AppRollingFile}.%d{yyyy-MM-dd}-%i.log">
+            <PatternLayout charset="UTF-8" pattern="%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] %-5level %logger{36} - %msg%n"/>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="80 MB"/>
+                <TimeBasedTriggeringPolicy modulate="true"/>
+            </Policies>
+            <DefaultRolloverStrategy max="10"/>
+        </RollingFile>
+    </Appenders>
+
+    <Loggers>
+        <Logger name="App" level="info" additivity="false">
+            <AppenderRef ref="AppRollingFile"/>
+        </Logger>
+    </Loggers>
+</Configuration>
